@@ -1,0 +1,111 @@
+{% extends 'base/main.html'%}
+{% block content%}
+<div class="header-bar">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3 style="margin: 0">You have <i>{{ count}}</i> incomplete task{{count|pluralize:"s"}}</h3>
+    </div>
+
+{%if request.user.is_authenticated%}
+
+<a href="{%url 'logout'%}">Logout</a>
+{%else%}
+<a href= "{%url 'login' %}">Login</a>
+{%endif%}
+</div>
+
+
+
+<hr>
+<h1>To do List</h1> 
+<a href="{% url 'task-create' %}">Create Task</a>
+
+
+<h2>Items</h2>
+<table>
+    <div class="pending"> 
+    <tr>
+        <th>Pending</th>
+        <th></th>
+        <td></td>
+    </tr>
+    {% for i in tasks %}
+    {%if i.dit and not i.complete%}
+    <tr>
+    <tr>  </tr>
+    <td>{{i.title}}</td>
+    
+    <td> </td>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    
+    <td><a href="{%url 'task-update' i.id%}">Edit</a></td>
+    <td><a class="edit" href="{%url 'task-delete' i.id%}">    &#215;</a></td>
+    {%endif%}
+    {%endfor%}
+    </tr>
+    
+    </div>
+    <div class="completed">
+    <tr>   </tr>
+    <tr>
+        <th>Completed</th>
+        <th>  </th>
+    </tr>
+    {% for i in tasks %}
+    {%if  i.complete%}
+    <tr>
+    <td><s>{{i.title}}</s></td>
+    <td>  </td>
+    <th>    </th>
+    <th>  </th>
+    <th>  </th>
+    <th>  </th>
+    <td>  </td>
+   
+    <td><a href="{%url 'task-update' i.id%}">Edit</a></td>
+    <td><a class=edit href="{%url 'task-delete' i.id%}">&#215</a></td>
+    {%endif%}
+    {%endfor%}
+    </tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    </div>
+    <div class="expired">
+    <tr>
+        <th>Expired</th>
+        <th></th>
+    </tr>
+    {% for i in tasks %}
+    {%if not i.complete and not  i.dit%}
+    <tr>
+    <td>{{i.title}}</td>
+    <td>    </td>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    
+    <td><a href="{%url 'task-update' i.id%}">Edit</a></td>
+    <td><a class=edit href="{%url 'task-delete' i.id%}">&#215</a></td>
+    {%endif%}
+    {%endfor%}
+    </tr>
+    </div>
+
+
+    
+    
+</table>
+
+{%endblock content%}
+
+
